@@ -19,8 +19,7 @@ const webPort = "80"
 var counts int64
 
 type Config struct {
-	DB     *sql.DB
-	Models data.Models
+	Repo data.Repository
 }
 
 func main() {
@@ -34,8 +33,7 @@ func main() {
 
 	// set up config
 	app := Config{
-		DB:     conn,
-		Models: data.New(conn),
+		
 	}
 
 	srv := &http.Server{
@@ -84,4 +82,9 @@ func connectToDB() *sql.DB {
 		log.Println("Backing off for two seconds...")
 		time.Sleep(2 * time.Second)
 	}
+}
+
+func (app *Config) setupRepo(conn *sql.DB) {
+	db := data.NewPostgressRepository(conn)
+	app.Repo = db
 }
