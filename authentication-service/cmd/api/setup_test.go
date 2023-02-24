@@ -8,7 +8,7 @@ import (
 
 var testApp Config
 
-func TesTestMain(m *testing.M) {
+func TestMain(m *testing.M) {
 	repo := data.NewPostgressTestRepository(nil)
 	testApp.Repo = repo
 	os.Exit(m.Run())
